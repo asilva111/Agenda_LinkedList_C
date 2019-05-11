@@ -268,7 +268,7 @@ void CommandListener(list* l){
     
     while(x == 0){
         char* input;
-        scanf(" %s", &input);
+        scanf("%s", &input);
 
         if(input == "add"){
             
