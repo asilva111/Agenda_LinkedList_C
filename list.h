@@ -49,6 +49,10 @@ void printName(node* n);
 void printBday(node* n);
 void printPhone(node* n);
 
+void CommandListener(list* l);
+node* findNode(list* l, char* name);
+void deleteNode(list* l, char* name);
+
 /*---------------------------------------------*/
 
 node* getHead(list* l);
