@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "list.h"
+
 
 //Node Functions
 node* newNode(char* name, char b[], char p[]){
@@ -114,9 +116,11 @@ void addNode(list* l, node* n){ //Push
 	if(getEntries(l) == 0){
 		setHead(l,n);
 		setTail(l,n);
-		// setCursor(l,n); //REMOVED TO MATCH LL SOLUTION
+
 
 		l -> entries++;
+        printf("\nFirst node added.\n");
+
 		return;
 	}
 
@@ -124,7 +128,7 @@ void addNode(list* l, node* n){ //Push
 	setTail(l,n);
 	l -> entries++;
 
-    printf("Node added.\n");
+    printf("\nNode added.\n");
 	
 }
 
@@ -183,27 +187,18 @@ void forward(list* l) //Move cursor to next
 }
 /*PROJECT METHODS --------------------------------------------------------------*/
 void printList(list* l){//Print list.
+    
     setCursor(l,getHead(l)); //Set cursor to head of list.
 
     for(int i = 0; i < getEntries(l); i++){ 
         
-        printf("\n Name: "); 
-        for(int i = 0; i < 20; i++){ //Print char array 'name'
-            printf("%c", getCursor(l) -> name[i]);
-        }
+        printAll(getCursor(l));
 
-        printf("\n Birthday: ");
-        for(int i = 0; i < 8; i++){ //Print char array 'bday'
-            printf("%c", getCursor(l) -> bday[i]);
-        }
-
-        printf("\n Phone: ");
-        for(int i = 0; i < 10; i++){
-            printf("%c", getCursor(l) -> phone[i]); //Print char array 'phone'
-        }
-        
         forward(l); //Move current 
+
     }
+
+    printf("\nList printed.\n");
 }
 
 void printEntries(list* l){ //Print L's entries.
@@ -267,55 +262,63 @@ void CommandListener(list* l){
     printf("exit - choose to save / terminate.\n");
     
     while(x == 0){
-        char* input;
-        scanf("%s", &input);
+        char input[10];
+        
+        char* add = "add";
+        char* delete = "delete";
+        char* print = "print";
+        char* find = "find";
+        char* ex = "exit";
+        scanf(" %s", &input);
 
-        if(input == "add"){
-            
+
+        if(strcmp(input,add) == 0){
+            printf("Please enter information of the node to add\n\n");
+
             char* name;
             char b[8];
             char p[10];
         
             printf("enter name\n");
-            scanf("%s", name);
+            scanf("%s", &name);
         
             printf("enter birthday.\n");
-            scanf("%s", b);
+            scanf("%s", &b);
             
             printf("enter phone number:\n");
-            scanf("%s", p);
+            scanf("%s", &p);
 
-            node* n = newNode(name,b,p);
+            node* n = newNode(&name,b,p);
 
             addNode(l,n);
 
         }
-        else if(input == "print"){
+        else if(strcmp(input,print) == 0){
             
             printf("Printing entire list...\n");
             printList(l);
     
         }
-        else if(input == "find"){
+        else if(strcmp(input,find) == 0){
             
             char* name;
             printf("enter name\n");
-            scanf("%s", name);
+            scanf("%s", &name);
 
             printAll(findNode(l,name));
 
         }
-        else if(input == "delete"){
+        else if(strcmp(input,delete) == 0){
             
             char* name;
             
             printf("Enter name of contact to be deleted:\n");
-            scanf("%s", name);
+            scanf("%s", &name);
 
             deleteNode(l, name);
 
         }
-        else if(input == "exit"){
+        else if(strcmp(input,ex) == 0){
             printf("Terminating.");
             x++;
 
@@ -325,6 +328,9 @@ void CommandListener(list* l){
             // if(Save == 'Y'){
             //     //Save
             // }
+        }
+        else{
+            printf("Please enter a valid command.\n");
         }
         
 
@@ -337,7 +343,7 @@ node* findNode(list* l, char* name){ //Find node by name.
     setCursor(l,getHead(l));
 
     while((getCursor(l)) != NULL){
-        if (getName(getCursor(l)) == name){ 
+        if (strcmp(getName(getCursor(l)),name) == 0){ 
             printf("Contact found.");
             return getCursor(l);
         }
