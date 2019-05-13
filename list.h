@@ -4,8 +4,8 @@
 typedef struct
 {
     char* name; //Members of the contact.
-    char bday[8]; //31122000 format
-    char phone[10]; //9151234567 format
+    char* bday; //31122000 format
+    char* phone; //9151234567 format
 	
 	struct node* next;
 } node;
@@ -20,15 +20,17 @@ typedef struct
 } list;
 
 //Node Functions
-node* newNode(char* name, char b[], char p[]);
+node* newNode(char* name, char* b, char* p);
 void  setName(node* n, char name[]); //Names changed to match list.c ; 'name' used because 'n' is used by node*.
 void  setBday(node* n, char b[]);
 void  setPhone(node* n, char p[]);
+
 void  setNext(node* n, node* nx);
 
-char*  getName(node* n); //RETURN TYPES OF GETTERS MIGHT NOT BE CORRECT
+char*  getName(node* n); 
 char*  getBday(node* n);
 char*  getPhone(node* n);
+
 node* getNext(node* n);
 
 //List Functions
@@ -49,8 +51,12 @@ void printBday(node* n);
 void printPhone(node* n);
 
 void CommandListener(list* l);
-node* findNode(list* l, char* name);
-void deleteNode(list* l, char* name);
+
+node* findNodeName(list* l, char* name);
+node* findNodeBday(list* l, char* bday);
+node* findNodePhone(list* l, char* phone);
+
+void deleteNodeName(list* l);
 
 /*---------------------------------------------*/
 
