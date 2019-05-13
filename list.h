@@ -43,7 +43,6 @@ void addNodeAt(list* l, node* n, int i);
 void printList(list* l);
 void printEntries(list* l);
 
-void printMember(node* n, char choice);
 void printAll(node* n);
 void printName(node* n);
 void printBday(node* n);

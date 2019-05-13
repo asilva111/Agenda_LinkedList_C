@@ -5,8 +5,26 @@
 int main()
 {
 	list results;
-	setCursor(&results, getHead(&results));
-	CommandListener(&results);
+    CommandListener(&results);
+   // &results -> entries = 0;
+	//setCursor(&results, getHead(&results));
+	//node* n = newNode("Luis","10101996", "915xxxxxxx");
+    //addNode(&results, n);
+    //printf("ENTRIES: %i", getEntries(&results));
+    //addNode(&results,newNode("Pedro","11112000", "915xxxxxxx"));
+    //printEntries(&results);
+
+    
+    //printList(&results);
+	
+	//CommandListener(&results);
+	
+	// char* MyName;
+	// scanf("%s", &MyName);
+	
+	// if(findNode(&results, &MyName) == NULL){
+	//     printf("NULL was returned");
+	// }
 	
 	/*char* MyName = "Jeff";
 	char date[8] = "08091998";
@@ -15,8 +33,7 @@ int main()
     
     //printList(&results);
 
-    // addNode(&results,newNode("Luis","10101996", "915xxxxxxx"));
-    // addNode(&results,newNode("Pedro","11112000", "915xxxxxxx"));
+
     // addNode(&results,newNode("Diana","14141998", "915xxxxxxx"));
     // addNode(&results,newNode("Satan","00000001", "6666666666"));
     

@@ -112,25 +112,7 @@ void setCursor(list* l, node* n)
 	l->cursor = n;
 }
 
-void addNode(list* l, node* n){ //Push
-	if(getEntries(l) == 0){
-		setHead(l,n);
-		setTail(l,n);
 
-
-		l -> entries++;
-        printf("\nFirst node added.\n");
-
-		return;
-	}
-
-	setNext(getTail(l), n); 
-	setTail(l,n);
-	l -> entries++;
-
-    printf("\nNode added.\n");
-	
-}
 
 
 void addNodeAt(list* l, node* n, int i) //Insert after i
@@ -186,26 +168,161 @@ void forward(list* l) //Move cursor to next
 	}
 }
 /*PROJECT METHODS --------------------------------------------------------------*/
-void printList(list* l){//Print list.
-    
-    setCursor(l,getHead(l)); //Set cursor to head of list.
+void addNode(list* l, node* n){ //Push
+	if(getEntries(l) == 0){
+		setHead(l,n);
+		setTail(l,n);
 
-    for(int i = 0; i < getEntries(l); i++){ 
+
+		l -> entries++;
+
+        printf("\nFirst node added.\n");
         
-        printAll(getCursor(l));
+        return;
+		
+	}else{
 
-        forward(l); //Move current 
+        setNext(getTail(l), n); 
+        setTail(l,n);
+        l -> entries++;
+
+        printf("\nNode added.\n");
+    }
+	
+}
+
+void CommandListener(list* l){
+    l -> entries = 0;
+    short x = 0;
+
+    printf("Commands available:\n");
+    
+    printf("add - insert contact in the phonebook\n");
+    printf("delete - delete contact from the phonebook\n");
+    printf("print - print contact list\n");
+    printf("find - print contact info by name.\n");
+    printf("exit - choose to save / terminate.\n");
+    
+    
+    
+    char* add = "add";
+    char* delete = "delete";
+    char* print = "print";
+    char* find = "find";
+    char* ex = "exit";
+    
+
+    while(x == 0){
+        
+        char input[10];
+ 
+        printf("\n\nPlease enter a command:\n");
+        scanf(" %s", &input);
+
+        if(strcmp(input,add) == 0){ //Add Node
+            printf("\nPlease enter information of the node to add.\n\n");
+
+            char* name;
+            char b[8];
+            char p[10];
+        
+            printf("enter name:\n");
+            scanf("%s", &name);
+        
+            printf("enter birthday:\n");
+            scanf("%s", &b);
+            
+            printf("enter phone number:\n");
+            scanf("%s", &p);
+
+            node* n = newNode(&name,b,p);
+
+            addNode(l,n);
+
+        }
+        else if(strcmp(input,print) == 0){ //Print List
+            
+            printf("\nPrinting entire list...\n");
+            printList(l);
+    
+        }
+        else if(strcmp(input,find) == 0){ //Find and print Node
+            
+            char* name;
+            printf("\nenter name\n");
+            scanf("%s", &name);
+
+            node* n = findNode(l, &name);
+            
+            if(n != NULL){
+                printAll(n);
+            }
+            else{
+                printf("\n\n");
+            }
+
+        }
+        else if(strcmp(input,delete) == 0){ //Delete Node
+            
+            char* name;
+            
+            printf("\nEnter name of contact to be deleted:\n");
+            scanf("%s", &name);
+            
+            deleteNode(l, &name);
+
+        }
+        else if(strcmp(input,ex) == 0){
+            printf("\nTerminating.\n");
+            x++;
+
+            // printf("Save to .txt before exiting?\n  Y/N");
+            // char Save = 'N'; //Save = input of user
+
+            // if(Save == 'Y'){
+            //     //Save
+            // }
+        }
+        else{
+            printf("\nPlease enter a valid command.\n");
+        }
+        
+    }  //Close while loop.
+    
+}//Close command Listener.
+
+
+void printList(list* l){//Print list.
+    printf("There are %i entries.\n", getEntries(l));
+    
+    if(getEntries(l) != 0){
+        
+        setCursor(l,getHead(l)); //Set cursor to head of list. ADD '&s' a lo pendejo
+
+        for(int i = 0; i < getEntries(l); i++){ 
+            
+            printAll(getCursor(l));
+
+            forward(l); //Move current 
+
+        }
+
+        printf("\nList printed.\n");
 
     }
+    else{
+        
+        printf("\nError - Cannot print empty list.\n");
+    
+    }
 
-    printf("\nList printed.\n");
 }
 
 void printEntries(list* l){ //Print L's entries.
     if(getEntries(l) < 1){
         printf("There are no entries in the list.\n");
     }
-    if (getEntries(l) == 1){
+    else if (getEntries(l) == 1){
         printf("There is 1 contact in the list.\n");
     }
     else{
@@ -217,14 +334,6 @@ void printAll(node* n){
     printName(n);
     printBday(n);
     printPhone(n);
-}
-
-void printMember(node* n, char choice){ //Prints 'A' all contact info of a node; 'N' name, 'B' Birthday; 'P' phone.
-    (choice == 'A' ? printAll(n)   : printf(' ')); //Conditonal Operator
-    (choice == 'N' ? printName(n)  : printf(' '));
-    (choice == 'B' ? printBday(n)  : printf(' '));
-    (choice == 'P' ? printPhone(n) : printf(' '));
-
 }
 
 void printName(node* n){
@@ -250,125 +359,55 @@ void printPhone(node* n){
     }
 }
 
-void CommandListener(list* l){
-    short x = 0;
 
-    printf("What would you like to do?\n");
-    
-    printf("add - insert contact in the phonebook\n");
-    printf("delete - delete contact from the phonebook\n");
-    printf("print - print contact list\n");
-    printf("find - print contact info by name.\n");
-    printf("exit - choose to save / terminate.\n");
-    
-    while(x == 0){
-        char input[10];
-        
-        char* add = "add";
-        char* delete = "delete";
-        char* print = "print";
-        char* find = "find";
-        char* ex = "exit";
-        scanf(" %s", &input);
-
-
-        if(strcmp(input,add) == 0){
-            printf("Please enter information of the node to add\n\n");
-
-            char* name;
-            char b[8];
-            char p[10];
-        
-            printf("enter name\n");
-            scanf("%s", &name);
-        
-            printf("enter birthday.\n");
-            scanf("%s", &b);
-            
-            printf("enter phone number:\n");
-            scanf("%s", &p);
-
-            node* n = newNode(&name,b,p);
-
-            addNode(l,n);
-
-        }
-        else if(strcmp(input,print) == 0){
-            
-            printf("Printing entire list...\n");
-            printList(l);
-    
-        }
-        else if(strcmp(input,find) == 0){
-            
-            char* name;
-            printf("enter name\n");
-            scanf("%s", &name);
-
-            printAll(findNode(l,name));
-
-        }
-        else if(strcmp(input,delete) == 0){
-            
-            char* name;
-            
-            printf("Enter name of contact to be deleted:\n");
-            scanf("%s", &name);
-
-            deleteNode(l, name);
-
-        }
-        else if(strcmp(input,ex) == 0){
-            printf("Terminating.");
-            x++;
-
-            // printf("Save to .txt before exiting?\n  Y/N");
-            // char Save = 'N'; //Save = input of user
-
-            // if(Save == 'Y'){
-            //     //Save
-            // }
-        }
-        else{
-            printf("Please enter a valid command.\n");
-        }
-        
-
-    }  //Close while loop.
-    
-
-}//Close command Listener.
 
 node* findNode(list* l, char* name){ //Find node by name.
     setCursor(l,getHead(l));
+    printf("\nSearching...");
 
-    while((getCursor(l)) != NULL){
-        if (strcmp(getName(getCursor(l)),name) == 0){ 
-            printf("Contact found.");
-            return getCursor(l);
+    while(getCursor(l) != NULL){
+        
+        if (getCursor(l) == getTail(l)){ //if last node is not the one to be found, stop.
+            
+            if((strcmp(getName(getCursor(l)), name) != 0) ){
+                break;
+            }
+            
         }
+        
+        if (strcmp(getName(getCursor(l)), name) == 0){ 
+            
+            printf("\nContact found.\n");
+            return getCursor(l);
+
+        }
+       
         forward(l);
     }
 
-    printf("Contact not found.");
+    printf("\nContact not found.\n");
     return NULL; //!!!
+
 }
 
 void deleteNode(list* l, char* name){ //delete node by name.
-    setCursor(l,getHead(l));
 
-    if(findNode(l,name) != NULL){
+    node* n = findNode(l, &name);
+
+    if( n != NULL){
+        //printf("Node found");
         
-        while(getName(getNext(getCursor(l))) != name){ //Move until before the node to be deleted
+        while(strcmp(getName(getNext(getCursor(l))), name) != 0){ //Move until before the node to be deleted
             forward(l);
         }
 
         setNext(getCursor(l), getNext(getNext(getCursor(l)))); //Make the cursor's next the next node of the node to be deleted.
-        printf("Node deleted.");   
+        printf("\nContact deleted.\n");
+        l -> entries--;   
     
     }
     else{
-        printf("Node not found.");
+        printf("\nContact cannot be deleted - not found.\n");
     }
 
 }
