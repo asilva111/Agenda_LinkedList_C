@@ -125,7 +125,7 @@ void setPhone(node* n, char* p)
 
 void  setNext(node* n, node* nx)
 {
-	n->next = (struct node*)nx;
+	n-> next = (struct node*)nx;
 }
 
 char*  getName(node* n) //MIGHT NEED TO CHANGE RETURN TYPE OF GETTERS
@@ -267,7 +267,7 @@ void CommandListener(list* l){
     addNode(l,newNode("Diana","14141998", "915xxxxxxx"));
     addNode(l,newNode("Andres","14141998", "915xxxxxxx"));
     addNode(l,newNode("Lucy","14141998", "915xxxxxxx"));
-    addNode(l,newNode("IamSabrinaSpellman","14141998", "915xxxxxxx"));
+    addNode(l,newNode("Sabrina","14141998", "915xxxxxxx"));
     
 
     while(x == 0){
@@ -316,7 +316,7 @@ void CommandListener(list* l){
 
             node* n;
            
-            printf("\nDelete by <name> <birthday> <phone>?\n"); //Ask user for find method.
+            printf("\nFind by <name> <birthday> <phone>?\n"); //Ask user for find method.
             scanf("%s", &choice);
 
             if(strcmp(choice,na) == 0){ //Check choice.
@@ -546,30 +546,72 @@ node* findNodePhone(list* l, char* phone){ //Find node by phone.
 
 void deleteNodeName(list* l){ //delete node by name.
     setCursor(l,getHead(l));
-    char* name;
+    char name[20];
     
     printf("\nenter name\n");
     scanf("%s", &name);
 
     node* n = findNodeName(l, &name);
+
+    if(getEntries(l) == 0){ //Deleting on an empty list.
     
-    if(n != NULL){
-        short i = 0;
+        printf("\nList is Empty");
+        return;
+    
+    }
+    else if(getEntries(l) == 1){
         
-        while(getNext(getCursor(l) != n && i <= getEntries(l))){ //Move until before the node to be deleted
-            printf("\n %i", i);
+        setHead(l,NULL);
+    
+    }
+    else if(n == getHead(l)){ //If head to be deleted, replace it by moving head to next.
+     
+        setHead(l,getNext(n));
+        
+    }
+    else if(n == getTail(l)){ //If tail to be deleted,
+        short i = 1;
+        
+        while(i < getEntries(l)){ //Move until before tail
             forward(l);
             i++;
         }
+
+        setTail(l,getCursor(l)); //Make current node the new tail
+
+    } 
+    else if(n != NULL){ //Node to be deleted IS in list.
+
+        short i = 0;
         
-        setNext(getCursor(l), getNext(getNext(getCursor(l)))); //Make the cursor's next the next node of the node to be deleted.
-        printf("\nContact deleted.\n");
-        l -> entries--;
+        while(  strcmp(  getName(getCursor(l))  , name) != 0)  { //Get to desired node to be deleted
+            i++; //Count possition.
+            forward(l);
+        }
+        
+        node* temp = getNext(getCursor(l)); //Store next of node to be deleted.
+        
+        short j = 0;
+        
+        setCursor(l,getHead(l)); //Reset cursor.
+        
+        while(j < i){ //Move cursor to exactly before node to be deleted.
+            forward(l);
+            j++;
+        }
+        
+        setNext(getCursor(l), temp); //Make cursor's next the node AFTER deletee.
 
     }
     else{
         printf("\nContact cannot be deleted - not found.\n");
     }
+
+
+    l -> entries--;
+    printf("\nContact deleted.\n");
+    
+    //free(n);
     
 
 }
