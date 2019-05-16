@@ -4,7 +4,7 @@
 
 int main()
 {
-	list results;
-    CommandListener(&results);
+	list LL;
+    CommandListener(&LL);
 }
 

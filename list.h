@@ -57,7 +57,10 @@ node* findNodeBday(list* l, char* bday);
 node* findNodePhone(list* l, char* phone);
 
 void deleteNodeName(list* l);
+void deleteNodeBday(list* l);
+void deleteNodePhone(list* l);
 
+void saveList(list* l);
 /*---------------------------------------------*/
 
 node* getHead(list* l);
