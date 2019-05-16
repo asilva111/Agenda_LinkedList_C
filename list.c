@@ -9,6 +9,7 @@ node* newNode(char* f, char* b, char* p){
 	node* n = (node*)malloc(sizeof(node)); //malloc returns void pointer, we cast it to node pointer
 
     short i = 0; /*Clone the given name to n's member----------------*/
+    
     while(f[i]!= '\0'){ //Count size of name
         i++;
     }
@@ -551,7 +552,7 @@ void deleteNodeName(list* l){ //delete node by name.
     printf("\nenter name\n");
     scanf("%s", &name);
 
-    node* n = findNodeName(l, &name);
+    node* n = findNodeName(l, &name); //Find node to be deleted
 
     if(getEntries(l) == 0){ //Deleting on an empty list.
     
@@ -570,6 +571,7 @@ void deleteNodeName(list* l){ //delete node by name.
         
     }
     else if(n == getTail(l)){ //If tail to be deleted,
+        
         short i = 1;
         
         while(i < getEntries(l)){ //Move until before tail
@@ -611,7 +613,7 @@ void deleteNodeName(list* l){ //delete node by name.
     l -> entries--;
     printf("\nContact deleted.\n");
     
-    //free(n);
+    free(temp);
     
 
 }
