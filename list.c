@@ -5,11 +5,11 @@
 
 
 //Node Functions
-node* newNode(char* name, char* b, char* p){
+node* newNode(char* f, char* b, char* p){
 	node* n = (node*)malloc(sizeof(node)); //malloc returns void pointer, we cast it to node pointer
 
     short i = 0; /*Clone the given name to n's member----------------*/
-    while(name[i]!= '\0'){ //Count size of name
+    while(f[i]!= '\0'){ //Count size of name
         i++;
     }
 
@@ -18,10 +18,10 @@ node* newNode(char* name, char* b, char* p){
     n -> name = (char*)malloc(i*sizeof(char)); //allocate memory
     i = 0;
 
-    while(*name){ //clone.
-        n -> name[i] = *name;
+    while(*f){ //clone.
+        n -> name[i] = *f;
         i++;
-        name++;
+        f++;
     }/*--------------------------------------------------------------*/
 
     i = 0; /*Clone the given birthday to n's member----------------*/
@@ -60,11 +60,11 @@ node* newNode(char* name, char* b, char* p){
 	return n; 
 }
 
-void  setName(node* n, char* name)
+void  setName(node* n, char* f)
 {
     short i = 0;
     
-    while(name[i]!= '\0'){
+    while(f[i]!= '\0'){
         i++;
     }
 
@@ -73,10 +73,10 @@ void  setName(node* n, char* name)
     n -> name = (char*)malloc(i*sizeof(char));
     i = 0;
 
-    while(*name){
-        n -> name[i] = *name;
+    while(*f){
+        n -> name[i] = *f;
         i++;
-        name++;
+        f++;
     }
 
 }
@@ -280,20 +280,20 @@ void CommandListener(list* l){
         if(strcmp(input,add) == 0){ //Add Node
             printf("\nPlease enter information of the node to add.\n\n");
 
-            char* name;
-            char* b;
-            char* p;
+            char f[20];
+            char b[20];
+            char p[20];
         
             printf("enter name:\n");
-            scanf("%s", &name);
+            scanf("%s", f); //printf("\nname: %s\n", &f);
         
             printf("enter birthday:\n");
-            scanf("%s", &b);
+            scanf("%s", b); //printf("\nbday: %s\n", &b);
             
             printf("enter phone number:\n");
-            scanf("%s", &p);
+            scanf("%s", p); //printf("\nphone: %s\n", &p);
 
-            node* n = newNode(&name,&b,&p);
+            node* n = newNode(f, b, p);
 
             addNode(l,n);
 
@@ -435,7 +435,7 @@ void printAll(node* n){
 void printName(node* n){
     printf("\n Name: "); 
     int i = 0;
-    while(n -> name[i] != '\0'){
+    while(n -> name[i] != NULL){
         printf("%c", n -> name[i]);
         i++;
     }
@@ -449,7 +449,8 @@ void printBday(node* n){
 }
 
 void printPhone(node* n){
-    printf("\n Phone: ");
+    printf(
+        "\n Phone: ");
     for(int i = 0; i < 10; i++){
         printf("%c", n -> phone[i]); //Print char array 'phone'
     }
@@ -572,24 +573,3 @@ void deleteNodeName(list* l){ //delete node by name.
     
 
 }
-
-
-
-
-//--------------------------------------------------------------------------
-// gotoStart(); //go to start of list -set cursor to start of list
-// gotoEnd(); //go to end of list - set cursor to end of list
-// deleteNode(); //remove last node
-// deleteNodeAt(); //delete node at specified index
-// getNodeAt(); //retrieve node from specified index
-
-// void deleteNode(list* l){
-// 	while(getCursor(l) -> next != NULL ){
-// 		forward(l);
-// 	}
-
-// }
-
-
-
-//Use -> instead of calling other functions

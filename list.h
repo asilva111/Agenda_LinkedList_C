@@ -3,9 +3,9 @@
 
 typedef struct
 {
-    char* name; //Members of the contact.
-    char* bday; //31122000 format
-    char* phone; //9151234567 format
+    char* name; 
+    char* bday; 
+    char* phone; 
 	
 	struct node* next;
 } node;
@@ -20,8 +20,8 @@ typedef struct
 } list;
 
 //Node Functions
-node* newNode(char* name, char* b, char* p);
-void  setName(node* n, char name[]); //Names changed to match list.c ; 'name' used because 'n' is used by node*.
+node* newNode(char* f, char* b, char* p);
+void  setName(node* n, char f[]); 
 void  setBday(node* n, char b[]);
 void  setPhone(node* n, char p[]);
 
