@@ -61,7 +61,7 @@ node* newNode(char* f, char* b, char* p){
 	return n; 
 }
 
-void  setName(node* n, char* f)
+void setName(node* n, char* f)
 {
     short i = 0;
     
@@ -124,22 +124,22 @@ void setPhone(node* n, char* p)
 
 }
 
-void  setNext(node* n, node* nx)
+void setNext(node* n, node* nx)
 {
 	n-> next = (struct node*)nx;
 }
 
-char*  getName(node* n) //MIGHT NEED TO CHANGE RETURN TYPE OF GETTERS
+char* getName(node* n) //MIGHT NEED TO CHANGE RETURN TYPE OF GETTERS
 {
 	return n->name;
 }
 
-char*   getBday(node* n)
+char* getBday(node* n)
 {
 	return n-> bday;
 }
 
-char*   getPhone(node* n)
+char* getPhone(node* n)
 {
 	return n-> phone;
 }
@@ -222,11 +222,10 @@ void forward(list* l) //Move cursor to next
 	}
 }
 /*PROJECT METHODS --------------------------------------------------------------*/
-void addNode(list* l, node* n){ //Push
-	if(getEntries(l) == 0){
+void addNode(list* l, node* n){ 
+	if(getEntries(l) == 0){ //If node first in list, make it head and tail.
 		setHead(l,n);
 		setTail(l,n);
-
 
 		l -> entries++;
 
@@ -235,9 +234,10 @@ void addNode(list* l, node* n){ //Push
         return;
 		
 	}else{
-
+        
         setNext(getTail(l), n); 
         setTail(l,n);
+        
         l -> entries++;
 
         printf("\nNode added.\n");
@@ -786,6 +786,12 @@ void deleteNodePhone(list* l){ //delete node by phone.
 }
 
 void saveList(list* l){
+   if(getEntries(l) == 0){
+       printf("\nList is empty.\n");
+       return;
+   }
+    
+   
    setCursor(l, getHead(l));
    FILE * fp;
    
@@ -794,7 +800,7 @@ void saveList(list* l){
  
    /*Print in txt file*/
 
-    for(int i = 0; i <= getEntries(l); i++){
+    for(int i = 0; i < getEntries(l); i++){
         
         fprintf(fp, "\nName: %s\nBirthday: %s\nPhone: %s\n", getName(getCursor(l)), getBday(getCursor(l)), getPhone(getCursor(l)) );
         forward(l);
